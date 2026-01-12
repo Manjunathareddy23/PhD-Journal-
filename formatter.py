@@ -1,5 +1,6 @@
 from docx import Document
 
+
 def generate_docx(sections):
     doc = Document()
     for title, content in sections.items():
