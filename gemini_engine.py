@@ -5,24 +5,30 @@ from plagiarism import plagiarism_check
 
 def init_gemini():
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    return genai.GenerativeModel("models/gemini-1.5-flash")
+
+    # ✅ FIX: Use supported Gemini model
+    return genai.GenerativeModel(
+        model_name="models/gemini-1.5-flash"
+    )
 
 
 def generate_section(model, section_name, context):
     prompt = f"""
-    You are an academic researcher.
+You are an academic researcher.
 
-    Write the {section_name} section of a Scopus-quality research paper.
-    Constraints:
-    - Original phrasing only
-    - No plagiarism
-    - Formal academic tone
-    - Human-like writing
-    - Avoid copying references directly
+Write the {section_name} section of a Scopus-quality research paper.
 
-    Context:
-    {context}
-    """
+Rules:
+- Original phrasing only
+- No plagiarism
+- Formal academic tone
+- Human-like writing
+- Do not copy reference sentences
+- Paraphrase concepts deeply
+
+Context:
+{context}
+"""
     response = model.generate_content(prompt)
     return response.text
 
@@ -42,7 +48,7 @@ def generate_with_plagiarism_control(model, section, context, references):
         context += (
             "\nRewrite with higher originality, "
             "change sentence structure, "
-            "avoid semantic overlap."
+            "reduce semantic overlap."
         )
 
     return text
