@@ -5,7 +5,7 @@ from plagiarism import plagiarism_check
 
 def init_gemini():
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    return genai.GenerativeModel("gemini-pro")
+    return genai.GenerativeModel("models/gemini-1.5-flash")
 
 
 def generate_section(model, section_name, context):
