@@ -32,11 +32,10 @@ def generate_with_plagiarism_control(model, section, context, references):
     Algorithm 1: Plagiarism-aware academic text generation
     """
 
-    for iteration in range(3):
+    for _ in range(3):
         text = generate_section(model, section, context)
 
         flagged, score = plagiarism_check(text, references)
-
         if not flagged:
             return text
 
