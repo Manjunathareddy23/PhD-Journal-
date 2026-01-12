@@ -6,10 +6,13 @@ from plagiarism import plagiarism_check
 def init_gemini():
     genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-    # ✅ FIX: Use supported Gemini model
-    return genai.GenerativeModel(
-        model_name="models/gemini-1.5-flash"
-    )
+    # 🔍 Find a usable text generation model
+    for model in genai.list_models():
+        if "generateContent" in model.supported_generation_methods:
+            # Pick the FIRST available text model
+            return genai.GenerativeModel(model.name)
+
+    raise RuntimeError("No Gemini text generation model available for this API key")
 
 
 def generate_section(model, section_name, context):
@@ -23,8 +26,7 @@ Rules:
 - No plagiarism
 - Formal academic tone
 - Human-like writing
-- Do not copy reference sentences
-- Paraphrase concepts deeply
+- Deep paraphrasing, not rewriting
 
 Context:
 {context}
@@ -48,7 +50,7 @@ def generate_with_plagiarism_control(model, section, context, references):
         context += (
             "\nRewrite with higher originality, "
             "change sentence structure, "
-            "reduce semantic overlap."
+            "reduce semantic similarity."
         )
 
     return text
