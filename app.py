@@ -1,6 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 import os
+from formatter import generate_docx, generate_pdf
 
 from gemini_engine import init_gemini, generate_with_plagiarism_control
 
