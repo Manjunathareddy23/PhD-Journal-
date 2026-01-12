@@ -8,7 +8,7 @@ load_dotenv()
 
 st.set_page_config(page_title="AI Journal Generator", layout="centered")
 
-# 🔹 FIX: Robust path handling
+# 🔹 FIX: Robust path handling 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSS_PATH = os.path.join(BASE_DIR, "assets", "style.css")
 
