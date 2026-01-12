@@ -1,0 +1,30 @@
+body {
+    background: #f6f8fb;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.main {
+    background: rgba(255,255,255,0.85);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+
+h1, h2, h3 {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.stButton>button {
+    background: linear-gradient(135deg,#2563eb,#1e40af);
+    color: white;
+    border-radius: 8px;
+    padding: 0.6rem 1.4rem;
+    border: none;
+}
+
+.stFileUploader {
+    border: 2px dashed #c7d2fe;
+    border-radius: 12px;
+    padding: 1rem;
+}
