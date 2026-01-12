@@ -8,7 +8,7 @@ load_dotenv()
 
 st.set_page_config(page_title="AI Journal Generator", layout="centered")
 
-# 🔹 FIX: Robust path handling 
+# ---- CSS LOADING (ROBUST) ----
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSS_PATH = os.path.join(BASE_DIR, "assets", "style.css")
 
@@ -18,4 +18,27 @@ if os.path.exists(CSS_PATH):
 else:
     st.warning("CSS file not found. Running without custom styling.")
 
+# ---- UI ----
 st.title("AI-Assisted Academic Document Generator")
+
+context = st.text_area("Enter Research Context / Dataset Summary")
+references_text = st.text_area(
+    "Paste Reference Texts (separate by ---)",
+    help="Paste reference content, separated by ---"
+)
+
+if st.button("Generate Paper"):
+    model = init_gemini()
+    references = references_text.split("---")
+
+    sections = {}
+    for sec in ["Abstract", "Introduction", "Methodology", "Results", "Conclusion"]:
+        sections[sec] = generate_with_plagiarism_control(
+            model, sec, context, references
+        )
+
+    st.success("Paper generated successfully!")
+
+    for k, v in sections.items():
+        st.subheader(k)
+        st.write(v)
